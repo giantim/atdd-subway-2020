@@ -5,8 +5,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.security.core.TokenResponse;
+import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.station.acceptance.step.StationAcceptanceStep;
@@ -86,7 +86,8 @@ public class FavoriteAcceptanceTest extends AcceptanceTest {
     }
 
     private Long 지하철_노선_등록되어_있음(String name, String color) {
-        ExtractableResponse<Response> createLineResponse1 = LineAcceptanceStep.지하철_노선_등록되어_있음(name, color);
+        ExtractableResponse<Response> createLineResponse1 =
+                LineAcceptanceStep.지하철_노선_등록되어_있음(name, color, 0);
         return createLineResponse1.as(LineResponse.class).getId();
     }
 

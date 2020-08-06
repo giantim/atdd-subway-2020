@@ -32,4 +32,10 @@ public class SubwayPath {
     public int calculateDistance() {
         return lineStationEdges.stream().mapToInt(it -> it.getLineStation().getDistance()).sum();
     }
+
+    public List<Long> extractLineIds() {
+        return lineStationEdges.stream()
+                .map(LineStationEdge::getLineId)
+                .collect(Collectors.toList());
+    }
 }

@@ -10,10 +10,7 @@ import wooteco.subway.maps.map.domain.LineStationEdge;
 import wooteco.subway.maps.map.domain.SubwayPath;
 import wooteco.subway.maps.station.domain.Station;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +19,7 @@ public class PathResponseAssemblerTest {
 
     @BeforeEach
     private void setUp() {
-        line = TestObjectUtils.createLine(4L, "4호선", "BLUE");
+        line = TestObjectUtils.createLine(4L, "4호선", "BLUE", 0);
     }
 
     @DisplayName("10km 이하일 때 요금 계산")
@@ -40,7 +37,8 @@ public class PathResponseAssemblerTest {
         stations.put(2L, TestObjectUtils.createStation(2L, "강남역"));
         stations.put(3L, TestObjectUtils.createStation(3L, "양재역"));
 
-        PathResponse pathResponse = PathResponseAssembler.assemble(subwayPath, stations);
+        PathResponse pathResponse = PathResponseAssembler.assemble(subwayPath, stations,
+                Collections.singletonList(line));
 
         assertThat(pathResponse.getFare()).isEqualTo(1_250);
     }
@@ -60,7 +58,8 @@ public class PathResponseAssemblerTest {
         stations.put(2L, TestObjectUtils.createStation(2L, "강남역"));
         stations.put(3L, TestObjectUtils.createStation(3L, "양재역"));
 
-        PathResponse pathResponse = PathResponseAssembler.assemble(subwayPath, stations);
+        PathResponse pathResponse = PathResponseAssembler.assemble(subwayPath, stations,
+                Collections.singletonList(line));
 
         assertThat(pathResponse.getFare()).isEqualTo(1_950);
     }
@@ -80,7 +79,8 @@ public class PathResponseAssemblerTest {
         stations.put(2L, TestObjectUtils.createStation(2L, "강남역"));
         stations.put(3L, TestObjectUtils.createStation(3L, "양재역"));
 
-        PathResponse pathResponse = PathResponseAssembler.assemble(subwayPath, stations);
+        PathResponse pathResponse = PathResponseAssembler.assemble(subwayPath, stations,
+                Collections.singletonList(line));
 
         assertThat(pathResponse.getFare()).isEqualTo(2_850);
     }

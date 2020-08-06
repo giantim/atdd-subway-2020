@@ -47,9 +47,13 @@ public class MapService {
     public PathResponse findPath(Long source, Long target, PathType type) {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
+        List<Long> pathLineIds = subwayPath.extractLineIds();
+        List<Line> pathLines = lines.stream()
+                .filter(line -> pathLineIds.contains(line.getId()))
+                .collect(Collectors.toList());
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
 
-        return PathResponseAssembler.assemble(subwayPath, stations);
+        return PathResponseAssembler.assemble(subwayPath, stations, pathLines);
     }
 
     private Map<Long, Station> findStations(List<Line> lines) {
