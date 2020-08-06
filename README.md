@@ -53,3 +53,12 @@ npm run dev
 ## 📝 License
 
 This project is [MIT](https://github.com/woowacourse/atdd-subway-2020/blob/master/LICENSE.md) licensed.
+
+### 기능 목록
+
+1. 경로 조회 응답 결과에 요금 정보 추가
+
+- 요금 계산 기준에 맞는 요금 정보도 함께 응답하도록 구현한다.
+    - 요금 계산은 먼저 기본 운임 가격에서 이용 거리에 따라 추가요금 까지 계산한다.
+    - 경로에 포함된 노선 중 가장 높은 추가 요금을 가진 금액을 더한다.
+    - 로그인한 회원의 연령을 확인해서 연령별 할인 정책을 적용한다.
