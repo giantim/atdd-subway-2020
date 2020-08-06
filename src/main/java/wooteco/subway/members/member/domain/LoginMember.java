@@ -57,7 +57,7 @@ public class LoginMember implements UserDetails {
     }
 
     public int discountFare(int fare) {
-        if (age == 0 || age > 20) {
+        if (age == 0 || age >= 20) {
             return fare;
         }
         if (age > 13) {

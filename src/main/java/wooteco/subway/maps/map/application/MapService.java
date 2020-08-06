@@ -44,7 +44,7 @@ public class MapService {
         return new MapResponse(lineResponses);
     }
 
-    public PathResponse findPath(Long source, Long target, PathType type) {
+    public PathResponse findPath(LoginMember loginMember, Long source, Long target, PathType type) {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
         List<Long> pathLineIds = subwayPath.extractLineIds();
@@ -53,7 +53,7 @@ public class MapService {
                 .collect(Collectors.toList());
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
 
-        return PathResponseAssembler.assemble(subwayPath, stations, pathLines);
+        return PathResponseAssembler.assemble(loginMember, subwayPath, stations, pathLines);
     }
 
     private Map<Long, Station> findStations(List<Line> lines) {

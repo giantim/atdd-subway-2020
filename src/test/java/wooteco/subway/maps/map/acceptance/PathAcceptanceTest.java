@@ -14,6 +14,9 @@ import wooteco.subway.maps.station.dto.StationResponse;
 
 import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.지하철_노선에_지하철역_등록되어_있음;
 import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.*;
+import static wooteco.subway.members.member.acceptance.MemberAcceptanceTest.*;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.로그인_되어_있음;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.회원_등록되어_있음;
 
 @DisplayName("지하철 경로 조회")
 public class PathAcceptanceTest extends AcceptanceTest {
@@ -57,7 +60,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
         지하철_노선에_지하철역_등록되어_있음(삼호선, 남부터미널역, 양재역, 2, 2);
     }
 
-    @DisplayName("두 역의 최단 거리 경로를 조회한다.")
+    @DisplayName("로그인 하지 않은 상태에서 두 역의 최단 거리 경로를 조회한다.")
     @Test
     void findPathByDistance() {
         //when
@@ -70,7 +73,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
     }
 
 
-    @DisplayName("두 역의 최소 시간 경로를 조회한다.")
+    @DisplayName("로그인 하지 않은 상태에서 두 역의 최소 시간 경로를 조회한다.")
     @Test
     void findPathByDuration() {
         //when
@@ -79,6 +82,20 @@ public class PathAcceptanceTest extends AcceptanceTest {
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
         총_거리와_소요_시간을_함께_응답함(response, 4, 3);
         경로에_대한_요금_응답(response, 1_350);
+    }
+
+    @DisplayName("로그인한 상태에서 두 역의 최단 거리 경로를 조회한다.")
+    @Test
+    void findPathByDistanceWithLogin() {
+        //when
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
+        로그인_되어_있음(EMAIL, PASSWORD);
+        ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L);
+
+        //then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        총_거리와_소요_시간을_함께_응답함(response, 3, 4);
+        경로에_대한_요금_응답(response, 1_450);
     }
 
     private Long 지하철_노선_등록되어_있음(String name, String color, int extraFare) {

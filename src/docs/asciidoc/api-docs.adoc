@@ -42,4 +42,4 @@ operation::paths/non-login[snippets='http-request,http-response,request-paramete
 [[resousrces-path-login]]
 === 로그인 하고 경로 검색
 
-operation::paths/login[snippets='http-request,http-response,request-header,request-parameters,response-fields']
+operation::paths/login[snippets='http-request,http-response,request-headers,request-parameters,response-fields']

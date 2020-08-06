@@ -4,21 +4,26 @@ import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.map.domain.SubwayPath;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
+import wooteco.subway.members.member.domain.LoginMember;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PathResponseAssembler {
     private static final int STANDARD_FARE = 1_250;
 
-    public static PathResponse assemble(SubwayPath subwayPath, Map<Long, Station> stations, List<Line> pathLines) {
+    public static PathResponse assemble(LoginMember loginMember, SubwayPath subwayPath, Map<Long, Station> stations, List<Line> pathLines) {
         List<StationResponse> stationResponses = subwayPath.extractStationId().stream()
                 .map(it -> StationResponse.of(stations.get(it)))
                 .collect(Collectors.toList());
 
         int distance = subwayPath.calculateDistance();
         int fare = calculateFare(distance, pathLines);
+        if (!Objects.isNull(loginMember)) {
+            fare = loginMember.discountFare(fare);
+        }
 
         return new PathResponse(stationResponses, subwayPath.calculateDuration(), distance, fare);
     }

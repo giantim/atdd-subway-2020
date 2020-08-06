@@ -66,7 +66,7 @@ public class PathDocumentation extends Documentation {
         params.put("source", 1L);
         params.put("target", 2L);
         params.put("type", PathType.DURATION);
-        when(mapService.findPath(anyLong(), anyLong(), any())).thenReturn(pathResponse);
+        when(mapService.findPath(any(), anyLong(), anyLong(), any())).thenReturn(pathResponse);
 
         given().log().all().
                 contentType(MediaType.APPLICATION_JSON_VALUE).
@@ -94,7 +94,7 @@ public class PathDocumentation extends Documentation {
                 extract();
     }
 
-    @DisplayName("로그인한 상태에서 경로 조회 문서화")
+    @DisplayName("로그인 한 상태에서 경로 조회 문서화")
     @Test
     void findPathWithLogin() {
         PathResponse pathResponse = new PathResponse(
@@ -109,14 +109,14 @@ public class PathDocumentation extends Documentation {
         params.put("source", 1L);
         params.put("target", 2L);
         params.put("type", PathType.DURATION);
-        when(mapService.findPathWithLoginMember(any(), anyLong(), anyLong(), any())).thenReturn(pathResponse);
+        when(mapService.findPath(any(), anyLong(), anyLong(), any())).thenReturn(pathResponse);
 
         given().log().all().
                 header("Authorization", "Bearer " + tokenResponse.getAccessToken()).
                 contentType(MediaType.APPLICATION_JSON_VALUE).
                 params(params).
                 when().
-                get("/paths/me").
+                get("/paths").
                 then().
                 log().all().
                 apply(document("paths/login",
