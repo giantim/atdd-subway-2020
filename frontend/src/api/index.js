@@ -13,6 +13,11 @@ const ApiService = {
       }
     })
   },
+  getWithParams(uri, path) {
+    return Vue.axios.get(`${uri}`, {
+      params: path
+    })
+  },
   login(uri, config) {
     return Vue.axios.post(`${uri}`, {}, config)
   },

@@ -1,8 +1,8 @@
 import ApiService from '@/api'
 
 const PathService = {
-  get() {
-    return ApiService.get()
+  get(params) {
+    return ApiService.getWithParams('/paths', params);
   }
 }
 
